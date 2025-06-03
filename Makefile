@@ -1,21 +1,37 @@
 .PHONY: build
 
-BINARY_NAME=wasmdash
+VERSION=$(shell git describe --tags --always)
+GOOS=$(shell go env GOOS)
+GOARCH=$(shell go env GOARCH)
 
-# build builds the tailwind css sheet, and compiles the binary into a usable thing.
-build:
+BINARY_NAME="wasmdash-$(VERSION)-$(GOOS)_$(GOARCH)"
+
+build: ## Build the project, including Tailwind CSS and Go binary
 	go mod tidy && \
 	tailwindcss -m -o static/css/tailwind.css && \
 	go generate && \
 	go build -ldflags="-w -s" -o ${BINARY_NAME}
 
-# dev runs the development server where it builds the tailwind css sheet,
-# and compiles the project whenever a file is changed.
-dev:
+vet: ## Run go vet to check for potential issues
+	go vet ./...
+
+run: build ## Run the built binary
+	./${BINARY_NAME}
+
+dev: ## Run the development server with live reload
 	templ generate --watch --cmd="go generate" &\
 	templ generate --watch --cmd="go run ."
 
-clean:
-	go clean
+gen: ## Generate templ files
+	templ generate
+	npx tailwindcss -o static/css/tailwind.css --minify
 
-help:
+clean: ## Clean up build artifacts and *_templ-files
+	go clean
+	@rm ${BINARY_NAME} static/css/tailwind.css 2>/dev/null || echo "No build artifacts to clean."
+	@rm "*_${GOOS}_${GOARCH}" 2>/dev/null || echo "No other build artifacts to clean."
+	@find . -name '*_templ.go' -type d -exec rm -r {} + || echo "No *_templ-files to clean."
+	@echo "\e[32mCleaned up build artifacts and *_templ-files.\e[0m"
+
+help: ## Display available commands
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
