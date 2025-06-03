@@ -64,3 +64,10 @@ podman run --rm -v $(pwd):/app tinygo/tinygo:0.37.0 tinygo build -o wasmdash.was
 
 - Go
 - TinyGo
+
+## Screenshots
+
+> [!IMPORTANT]
+> Heavily work in progress screenshot
+
+![screenshot 03.06.2025](assets/03062025.png)
