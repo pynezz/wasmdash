@@ -1,0 +1,19 @@
+package pages
+
+templ Home() {
+    <div class={"div", "flex flex-col sm:flex-row items-center justify-between h-screen bg-gradient-to-b from-[#0d1117] to-[#161b22] text-white"}>
+        // <div class="flex flex-col justify-between p-4 max-w-fit">
+        <div class="flex flex-col justify-between p-4 max-w-fit flex-grow">
+            <h1 class={"h1", "text-7xl font-bold"}>/</h1>
+            <h2 class={"h2", "color: #c9d1d9" }>Blogging about cyber security,<br />development, code, and tech.</h2>
+            // <span class="flex row-auto items-center content-between justify-between">
+            <span class="flex flex-col sm:flex-row items-center sm:justify-center space-y-12 sm:space-y-2 sm:space-x-2 mt-auto">
+                <button id="about-btn" class={"mt-4", "hover:bg-gray-700"}>About</button>
+                <a href="https://www.github.com/pynezz/">
+                    <img src="/static/svgs/github-icon.svg" class={"img", "w-6 h-6"} alt="github icon" />
+                </a>
+            </span>
+        </div>
+        <img src="/static/img/t_isometric_xs.webp" alt="Isometric depiction the site content" class={"img", "w-full h-auto"} />
+    </div>
+}

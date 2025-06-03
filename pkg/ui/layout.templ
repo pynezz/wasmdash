@@ -1,0 +1,40 @@
+package ui
+
+templ Component() {
+	<div class="p-4">
+		<h1 class="text-2xl font-bold">Welcome to the Templ PWA</h1>
+		<p class="mt-2">This is a simple Progressive Web App built with Templ.</p>
+	</div>
+}
+
+script registerServiceWorkers() {
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', () => {
+			navigator.serviceWorker.register('/sw.js')
+				.then(registration => {
+					console.log('Service Worker registered with scope:', registration.scope);
+				})
+				.catch(error => {
+					console.error('Service Worker registration failed:', error);
+				});
+		});
+	}
+}
+
+templ Layout(content templ.Component, path ...string) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<title>Templ PWA</title>
+			<link href="/static/css/tailwind.css" rel="stylesheet"/>
+		</head>
+		<body>
+			<main class="flex-grow container mx-auto">
+				@content
+			</main>
+			@registerServiceWorkers()
+		</body>
+	</html>
+}

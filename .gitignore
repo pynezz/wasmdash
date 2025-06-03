@@ -1,0 +1,20 @@
+.env
+node_modules
+tmp/
+dist
+
+# Ignore build artifacts
+build/
+
+# Ignore temporary files
+*.tmp
+*.log
+
+
+.DS_Store
+*.env.local
+
+# Ignore IDE files
+.idea/
+.zed/
+.vscode/
