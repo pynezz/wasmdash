@@ -7,6 +7,7 @@ self.addEventListener("install", (event) => {
     caches.open("static-v1").then((cache) => {
       return cache.addAll([
         "/",
+        "/service-worker.js",
         "/index.html",
         "/static/css/tailwind.css",
         "/static/js/app.js",

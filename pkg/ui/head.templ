@@ -6,15 +6,21 @@ templ ogMeta() {
 	<meta property="og:title" content="Wasmdash"/>
 	<meta property="og:description" content="A simple dashboard for managing your web applications"/>
 	<meta property="og:image" content="/static/img/wasmdash.png"/>
+	<meta property="og:url" content="https://pynezz.dev/"/>
 }
 
-templ Head() {
+
+templ Head(title string, path ...string) {
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="A simple dashboard for managing your web applications"/>
 		@ogMeta()
-		<title>Wasmdash</title>
-		<link rel="stylesheet" href="/static/css/tailwind.css"/>
+		<title> { title } </title>
+		<link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
+		<link rel="font" href="/static/fonts/source-sans-3.woff2" type="font/woff2" />
+
+		<link rel="stylesheet" href="/static/css/tailwind.css" />
+
 	</head>
 }

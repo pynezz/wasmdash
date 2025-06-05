@@ -10,7 +10,7 @@ templ Component() {
 script registerServiceWorkers() {
 	if ('serviceWorker' in navigator) {
 		window.addEventListener('load', () => {
-			navigator.serviceWorker.register('/sw.js')
+			navigator.serviceWorker.register('/service-worker.js')
 				.then(registration => {
 					console.log('Service Worker registered with scope:', registration.scope);
 				})
@@ -21,20 +21,26 @@ script registerServiceWorkers() {
 	}
 }
 
-templ Layout(content templ.Component, path ...string) {
+templ ServiceWorker() {
+	@registerServiceWorkers()
+}
+
+
+css mainStyle() {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+templ Layout(content templ.Component, nonce string, path ...string) {
 	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<title>Templ PWA</title>
-			<link href="/static/css/tailwind.css" rel="stylesheet"/>
-		</head>
+	<html lang="en" class={ "html", @mainStyle }>
+		@Head("wDash", path...)
 		<body>
-			<main class="flex-grow container mx-auto">
+			<main class={"main", "flex-grow text-white"}>
+				nonce: { nonce }
 				@content
 			</main>
-			@registerServiceWorkers()
 		</body>
 	</html>
 }
