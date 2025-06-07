@@ -45,6 +45,11 @@ func serve(app *echo.Echo) {
 
 	app.Static("/static", "static")
 	app.GET("/", homeHandler)
+	app.GET("/about", aboutHandler)
+	app.GET("/service-worker.js", serviceWorker)
+	app.GET("/robots.txt", func(c echo.Context) error {
+		return c.String(http.StatusOK, "User-agent: *\nDisallow: /")
+	})
 
 	app.GET("/404", func(c echo.Context) error {
 		return Render(c, 404, pages.NotFound())
@@ -58,13 +63,13 @@ func Render(ctx echo.Context, statusCode int, t templ.Component) error {
 	defer templ.ReleaseBuffer(buf)
 	nonce, err := core.GenerateNonce()
 	templCtx := templ.WithNonce(ctx.Request().Context(), nonce)
-	ctx.Response().Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'self' 'nonce-"+nonce+"'; style-src 'self'; img-src 'self' *.github.com; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; block-all-mixed-content; upgrade-insecure-requests;")
+	ctx.Response().Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'self' 'nonce-"+nonce+"'; style-src 'self'; img-src 'self' *.github.com; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;")
 
 	if err != nil {
 		ansi.PrintError("Error generating nonce: " + nonce)
 	}
 
-	if err := ui.Layout(t, ctx.Path()).Render(templCtx, buf); err != nil {
+	if err := ui.Layout(t, nonce, ctx.Path()).Render(templCtx, buf); err != nil {
 		return err
 	}
 	// if err := templates.Root(t, nonce, ctx.Path()).Render(ctx.Request().Context(), buf); err != nil {
