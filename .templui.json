@@ -1,0 +1,6 @@
+{
+  "componentsDir": "pkg/ui/components",
+  "utilsDir": "utils",
+  "moduleName": "github.com/pynezz/wasmdash",
+  "jsDir": "static/js"
+}
