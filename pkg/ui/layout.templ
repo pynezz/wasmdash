@@ -1,5 +1,7 @@
 package ui
 
+import "github.com/axzilla/templui/components"
+
 templ Component() {
 	<div class="p-4">
 		<h1 class="text-2xl font-bold">Welcome to the Templ PWA</h1>
@@ -25,21 +27,25 @@ templ ServiceWorker() {
 	@registerServiceWorkers()
 }
 
-
 css mainStyle() {
-	margin: 0;
-	padding: 0;
 	box-sizing: border-box;
+	background-color: #333333;
 }
 
+// /* margin: 0; */
+// /* padding: 0; */
 templ Layout(content templ.Component, nonce string, path ...string) {
 	<!DOCTYPE html>
-	<html lang="en" class={ "html", @mainStyle }>
+	<html lang="en" style={ mainStyle() }>
 		@Head("wDash", path...)
 		<body>
-			<main class={"main", "flex-grow text-white"}>
+			<main class={ "main", "flex-grow text-white" }>
 				nonce: { nonce }
 				@content
+				@components.Button(components.ButtonProps{
+					Text:      "Click me",
+					IconRight: icons.ArrowRight(icons.IconProps{Size: "16"}),
+				})
 			</main>
 		</body>
 	</html>

@@ -8,7 +8,7 @@ BINARY_NAME="wasmdash-$(VERSION)-$(GOOS)_$(GOARCH)"
 
 build: ## Build the project, including Tailwind CSS and Go binary
 	go mod tidy && \
-	tailwindcss -m -o static/css/tailwind.css && \
+	#go generate #go getailwindcss -m -o static/css/styles.css && \
 	go generate && \
 	go build -ldflags="-w -s" -o ${BINARY_NAME}
 
@@ -24,11 +24,11 @@ dev: ## Run the development server with live reload
 
 gen: ## Generate templ files
 	templ generate
-	npx tailwindcss -o static/css/tailwind.css --minify
+	# tailwindcss -o static/css/styles.css --minify
 
 clean: ## Clean up build artifacts and *_templ-files
 	go clean
-	@rm ${BINARY_NAME} static/css/tailwind.css 2>/dev/null || echo "No build artifacts to clean."
+	@rm ${BINARY_NAME} static/css/styles.css 2>/dev/null || echo "No build artifacts to clean."
 	@rm "*_${GOOS}_${GOARCH}" 2>/dev/null || echo "No other build artifacts to clean."
 	@find . -name '*_templ.go' -type d -exec rm -r {} + || echo "No *_templ-files to clean."
 	@echo "\e[32mCleaned up build artifacts and *_templ-files.\e[0m"

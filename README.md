@@ -72,3 +72,45 @@ podman run --rm -v $(pwd):/app tinygo/tinygo:0.37.0 tinygo build -o wasmdash.was
 > Heavily work in progress screenshot
 
 ![screenshot 03.06.2025](assets/03062025.png)
+
+## Contributing
+
+[Contributing](CONTRIBUTING.md)
+
+### Dependencies
+
+**templ**
+
+```sh
+go install github.com/a-h/templ/cmd/templ@latest
+```
+
+**tailwindcss**
+
+```sh
+curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64
+chmod +x tailwindcss-linux-x64
+sudo mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
+```
+
+**templui**
+
+```sh
+go install github.com/axzilla/templui/cmd/templui@latest
+```
+
+**air**
+
+```sh
+go install github.com/air-verse/air@latest
+```
+
+**start development server**
+
+```
+make dev
+```
+
+## License
+
+[MIT](LICENSE)

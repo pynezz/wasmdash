@@ -16,7 +16,7 @@ import (
 //go:embed static/*
 var static embed.FS
 
-//go:generate npx tailwindcss -i static/css/style.css -o static/css/tailwind.css -m
+//go:generate tailwindcss -i assets/css/base.css -o static/css/styles.css -m
 
 func init() {
 	log.Println("initializing application")
