@@ -21,6 +21,10 @@ func AboutHandler(c echo.Context) error {
 	return Render(c, http.StatusOK, pages.About(c.Path()))
 }
 
+func DashboardHandler(c echo.Context) error {
+	return Render(c, http.StatusOK, pages.Dashboard())
+}
+
 func ServiceWorkerHandler(c echo.Context) error {
 	if err := middleware.Log(c); err != nil {
 		ansi.PrintError("Error logging request: " + err.Error())

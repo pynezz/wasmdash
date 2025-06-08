@@ -61,8 +61,9 @@ func (s *Server) SetupRoutes() {
 	// Main application routes
 	s.echo.GET("/", handlers.HomeHandler)
 	s.echo.GET("/about", handlers.AboutHandler)
+	s.echo.GET("/dashboard", handlers.DashboardHandler)
 	s.echo.GET("/service-worker.js", handlers.ServiceWorkerHandler)
-
+	
 	// Utility routes
 	s.echo.GET("/robots.txt", handlers.RobotsHandler)
 	s.echo.GET("/404", handlers.NotFoundHandler)

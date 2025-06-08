@@ -7,10 +7,14 @@ self.addEventListener("install", (event) => {
     caches.open("static-v1").then((cache) => {
       return cache.addAll([
         "/",
-        "/service-worker.js",
+        "/about",
+        "/dashboard",
         "/index.html",
-        "/static/css/tailwind.css",
+        "/favicon.ico",
+        "/manifest.json",
+        "/service-worker.js",
         "/static/js/app.js",
+        "/static/css/tailwind.css",
         "/static/icons/icon-192-fs8.png",
       ]);
     }),

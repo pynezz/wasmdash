@@ -38,7 +38,7 @@ templ Hero() {
                         Class:   "text-lg px-8 py-3 h-auto",
                         Href:    "/dashboard",
                     }) {
-                        Get Started
+                        Dashboard
                         @icon.ArrowRight(icon.Props{Size: 20, Class: "ml-2"})
                     }
                     @button.Button(button.Props{
@@ -106,7 +106,7 @@ templ Stats() {
 			<div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
 				@StatItem("99.9%", "Uptime")
 				@StatItem("<100ms", "Response Time")
-				@StatItem("Zero", "Dependencies")
+				@StatItem("1", "Binary")
 				@StatItem("∞", "Possibilities")
 			</div>
 		</div>

@@ -1,0 +1,222 @@
+package pages
+
+import (
+	"fmt"
+	"github.com/pynezz/wasmdash/pkg/ui/components/button"
+	"github.com/pynezz/wasmdash/pkg/ui/components/card"
+	"github.com/pynezz/wasmdash/pkg/ui/components/icon"
+)
+
+// DashboardData holds all the data needed for the dashboard
+type DashboardData struct {
+	Username      string
+	Notifications int
+	Stats         []StatWidget
+	SystemStatus  SystemStatus
+}
+
+// StatItem represents a single stat card on the dashboard
+type StatWidget struct {
+	Title       string
+	Value       string
+	Change      float64 // positive is good, negative is bad
+	Description string
+	Icon        string
+}
+
+// SystemStatus contains information about the system
+type SystemStatus struct {
+	Uptime       string
+	MemoryUsage  string
+	CPUUsage     string
+	DiskUsage    string
+	ActiveUsers  int
+	HealthStatus string // "healthy", "warning", "critical"
+}
+
+// DefaultDashboardData returns mock data for the dashboard
+func DefaultDashboardData() DashboardData {
+	return DashboardData{
+		Username:      "Admin",
+		Notifications: 3,
+		Stats: []StatWidget{
+			{Title: "Active Users", Value: "1,234", Change: 12.5, Description: "12.5% increase from last month", Icon: "users"},
+			{Title: "Requests", Value: "23.5K", Change: 5.2, Description: "5.2% increase from yesterday", Icon: "activity"},
+			{Title: "CPU Load", Value: "32%", Change: -2.4, Description: "2.4% decrease from average", Icon: "cpu"},
+			{Title: "Memory Usage", Value: "4.2GB", Change: 0.0, Description: "No change from normal levels", Icon: "database"},
+		},
+		SystemStatus: SystemStatus{
+			Uptime:       "14d 6h 23m",
+			MemoryUsage:  "68%",
+			CPUUsage:     "32%",
+			DiskUsage:    "47%",
+			ActiveUsers:  24,
+			HealthStatus: "healthy",
+		},
+	}
+}
+
+// Dashboard template for the main dashboard page
+templ Dashboard() {
+	@DashboardView(DefaultDashboardData())
+}
+
+templ DashboardView(data DashboardData) {
+	<div class="p-6 max-w-7xl mx-auto">
+		<!-- Page Header -->
+		<header class="mb-8">
+			<h1 class="text-3xl font-bold text-foreground">Dashboard</h1>
+			<p class="text-muted-foreground">Welcome back, { data.Username }</p>
+		</header>
+
+		<!-- Stats Cards -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+			for _, stat := range data.Stats {
+				@StatCard(stat)
+			}
+		</div>
+
+		<!-- System Status -->
+		@SystemStatusCard(data.SystemStatus)
+	</div>
+}
+
+// StatCard displays a single statistic
+templ StatCard(stat StatWidget) {
+	@card.Card(card.Props{
+		Class: "hover:shadow-md transition-all",
+	}) {
+		@card.Content(card.ContentProps{}) {
+			<div class="flex justify-between">
+				<div class="space-y-1">
+					<p class="text-sm font-medium text-muted-foreground">{ stat.Title }</p>
+					<p class="text-2xl font-bold">{ stat.Value }</p>
+				</div>
+				<div class="p-2 bg-muted rounded-full">
+					if stat.Icon == "users" {
+						@icon.Users(icon.Props{Size: 20, Class: "text-primary"})
+					} else if stat.Icon == "activity" {
+						@icon.Activity(icon.Props{Size: 20, Class: "text-accent"})
+					} else if stat.Icon == "cpu" {
+						@icon.Cpu(icon.Props{Size: 20, Class: "text-warning"})
+					} else if stat.Icon == "database" {
+						@icon.Database(icon.Props{Size: 20, Class: "text-success"})
+					}
+				</div>
+			</div>
+			<div class="mt-2 flex items-center text-xs">
+				if stat.Change > 0 {
+					<span class="text-green-500 flex items-center">
+						@icon.TrendingUp(icon.Props{Size: 14, Class: "mr-1"})
+						{ fmt.Sprintf("+%.1f%%", stat.Change) }
+					</span>
+				} else if stat.Change < 0 {
+					<span class="text-yellow-500 flex items-center">
+						@icon.TrendingDown(icon.Props{Size: 14, Class: "mr-1"})
+						{ fmt.Sprintf("%.1f%%", stat.Change) }
+					</span>
+				} else {
+					<span class="text-muted-foreground flex items-center">
+						@icon.Minus(icon.Props{Size: 14, Class: "mr-1"})
+						{ "0.0%" }
+					</span>
+				}
+				<span class="ml-2 text-muted-foreground">{ stat.Description }</span>
+			</div>
+		}
+	}
+}
+
+// SystemStatusCard displays system health information
+templ SystemStatusCard(status SystemStatus) {
+	@card.Card(card.Props{}) {
+		@card.Header(card.HeaderProps{}) {
+			@card.Title(card.TitleProps{}) {
+				System Status
+			}
+			<div class="flex items-center mt-1">
+				if status.HealthStatus == "healthy" {
+					<div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+					<span class="text-sm font-medium text-green-500">All Systems Operational</span>
+				} else if status.HealthStatus == "warning" {
+					<div class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></div>
+					<span class="text-sm font-medium text-yellow-500">Degraded Performance</span>
+				} else {
+					<div class="w-2 h-2 rounded-full bg-red-500 mr-2"></div>
+					<span class="text-sm font-medium text-red-500">System Issues Detected</span>
+				}
+			</div>
+		}
+		@card.Content(card.ContentProps{}) {
+			<div class="space-y-4">
+				<!-- Uptime -->
+				<div class="flex justify-between items-center">
+					<div class="flex items-center">
+						@icon.Clock(icon.Props{Size: 16, Class: "text-muted-foreground mr-2"})
+						<span class="text-sm">Uptime</span>
+					</div>
+					<span class="text-sm font-medium">{ status.Uptime }</span>
+				</div>
+
+				<!-- Memory Usage -->
+				<div>
+					<div class="flex justify-between items-center mb-1">
+						<div class="flex items-center">
+							@icon.Database(icon.Props{Size: 16, Class: "text-muted-foreground mr-2"})
+							<span class="text-sm">Memory</span>
+						</div>
+						<span class="text-sm font-medium">{ status.MemoryUsage }</span>
+					</div>
+					<div class="w-full bg-muted rounded-full h-2">
+						<div class="bg-blue-500 h-2 rounded-full" style={ fmt.Sprintf("width: %s", status.MemoryUsage) }></div>
+					</div>
+				</div>
+
+				<!-- CPU Usage -->
+				<div>
+					<div class="flex justify-between items-center mb-1">
+						<div class="flex items-center">
+							@icon.Cpu(icon.Props{Size: 16, Class: "text-muted-foreground mr-2"})
+							<span class="text-sm">CPU</span>
+						</div>
+						<span class="text-sm font-medium">{ status.CPUUsage }</span>
+					</div>
+					<div class="w-full bg-muted rounded-full h-2">
+						<div class="bg-purple-500 h-2 rounded-full" style={ fmt.Sprintf("width: %s", status.CPUUsage) }></div>
+					</div>
+				</div>
+
+				<!-- Disk Usage -->
+				<div>
+					<div class="flex justify-between items-center mb-1">
+						<div class="flex items-center">
+							@icon.HardDrive(icon.Props{Size: 16, Class: "text-muted-foreground mr-2"})
+							<span class="text-sm">Disk</span>
+						</div>
+						<span class="text-sm font-medium">{ status.DiskUsage }</span>
+					</div>
+					<div class="w-full bg-muted rounded-full h-2">
+						<div class="bg-yellow-500 h-2 rounded-full" style={ fmt.Sprintf("width: %s", status.DiskUsage) }></div>
+					</div>
+				</div>
+
+				<!-- Active Users -->
+				<div class="flex justify-between items-center">
+					<div class="flex items-center">
+						@icon.Users(icon.Props{Size: 16, Class: "text-muted-foreground mr-2"})
+						<span class="text-sm">Active Users</span>
+					</div>
+					<span class="text-sm font-medium">{ fmt.Sprintf("%d", status.ActiveUsers) }</span>
+				</div>
+			</div>
+		}
+		@card.Footer(card.FooterProps{}) {
+			@button.Button(button.Props{
+				Variant: button.VariantOutline,
+				Class:   "w-full text-sm",
+			}) {
+				View Detailed Metrics
+			}
+		}
+	}
+}

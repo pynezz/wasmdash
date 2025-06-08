@@ -103,11 +103,18 @@ podman run --rm -v $(pwd):/app tinygo/tinygo:0.37.0 tinygo build -o wasmdash.was
 ## Screenshots
 
 > [!IMPORTANT]
-> Heavily work in progress screenshot
+> These will be updated regularly with new screenshots of the dashboard as it evolves.
 
 **08.06.2025**
 
-![screenshot 08.06.2025](assets/08062025.png)
+
+| Frontpage | Dashboard |
+| --- | --- |
+| ![screenshot 08.06.2025](assets/vibrant.png) | ![vibrant-theme](assets/wasmdash-vibrant.png) |
+
+**05.06.2025**
+
+> ![screenshot 05.06.2025](assets/monochrome.png)
 
 **03.06.2025**
 
@@ -119,7 +126,7 @@ podman run --rm -v $(pwd):/app tinygo/tinygo:0.37.0 tinygo build -o wasmdash.was
 
 ### Dependencies
 
-**templ**
+**templ:**
 
 ```sh
 go install github.com/a-h/templ/cmd/templ@latest

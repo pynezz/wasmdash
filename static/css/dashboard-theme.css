@@ -1,0 +1,15 @@
+
+/* Auto-generated Dashboard Theme */
+:root {
+    --dashboard-primary: hsl(262 83% 58%);
+    --dashboard-accent: hsl(178 60% 48%);
+    --dashboard-success: hsl(142 76% 36%);
+    --dashboard-warning: hsl(43 96% 56%);
+}
+
+.dark {
+    --dashboard-primary: hsl(262 83% 58%);
+    --dashboard-accent: hsl(178 60% 48%);
+    --dashboard-success: hsl(142 76% 36%);
+    --dashboard-warning: hsl(43 96% 56%);
+}

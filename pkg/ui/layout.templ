@@ -1,38 +1,3 @@
-// package ui
-
-// script registerServiceWorkers() {
-// 	if ('serviceWorker' in navigator) {
-// 		window.addEventListener('load', () => {
-// 			navigator.serviceWorker.register('/service-worker.js')
-// 				.then(registration => {
-// 					console.log('Service Worker registered with scope:', registration.scope);
-// 				})
-// 				.catch(error => {
-// 					console.error('Service Worker registration failed:', error);
-// 				});
-// 		});
-// 	}
-// }
-
-// templ ServiceWorker() {
-// 	@registerServiceWorkers()
-// }
-
-// css mainStyle() {
-// 	box-sizing: border-box;
-// }
-// templ Layout(content templ.Component, nonce string, path ...string) {
-// 	<!DOCTYPE html>
-// 	<html lang="en" style={ mainStyle() }>
-// 		@Head("wDash", path...)
-// 		<body>
-// 			<main class={ "main", "flex-grow" }>
-// 				@content
-// 			</main>
-// 		</body>
-// 	</html>
-// }
-
 package ui
 
 script registerServiceWorkers() {
@@ -53,13 +18,13 @@ templ ServiceWorker() {
     @registerServiceWorkers()
 }
 
-css mainStyle() {
-    box-sizing: border-box;
-}
+// css mainStyle() {
+//     // box-sizing: border-box;
+// }
 
 templ Layout(content templ.Component, nonce string, path ...string) {
     <!DOCTYPE html>
-    <html lang="en" class="dark" style={ mainStyle() }>
+    <html lang="en" class="dark" style={ }>
         @Head("WasmDash", path...)
         <body class="min-h-screen bg-background text-foreground">
             <div class="h-1 bg-gradient-to-r from-dashboard-primary to-dashboard-accent"></div>
