@@ -1,21 +1,21 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/labstack/echo/v4"
-	"github.com/pynezz/wasmdash/pkg/ui"
-	"github.com/pynezz/wasmdash/pkg/ui/pages"
+	"github.com/pynezz/wasmdash/pkg/server/handlers"
 )
 
+// Legacy handler functions for backward compatibility
+// These delegate to the new structured handlers
+
 func homeHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, pages.Home())
+	return handlers.HomeHandler(c)
 }
 
 func aboutHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, pages.About(c.Path()))
+	return handlers.AboutHandler(c)
 }
 
 func serviceWorker(c echo.Context) error {
-	return Render(c, http.StatusOK, ui.ServiceWorker())
+	return handlers.ServiceWorkerHandler(c)
 }

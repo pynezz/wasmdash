@@ -1,20 +1,214 @@
 package pages
 
+import (
+	"github.com/pynezz/wasmdash/pkg/ui/components/button"
+	"github.com/pynezz/wasmdash/pkg/ui/components/card"
+	"github.com/pynezz/wasmdash/pkg/ui/components/icon"
+)
+
+templ Hero() {
+	<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+		<!-- Background gradient -->
+		<div class="absolute inset-0 bg-gradient-to-br from-background via-background to-muted"></div>
+
+		<!-- Grid pattern overlay -->
+		<div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+
+		<!-- Content -->
+		<div class="relative z-10 container mx-auto px-4 text-center">
+			<div class="max-w-4xl mx-auto space-y-8">
+				<!-- Main heading -->
+				<div class="space-y-4">
+					<h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+						<span class="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+							Welcome to
+						</span>
+						<br/>
+						<span class="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
+							WasmDash
+						</span>
+					</h1>
+					<p class="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+						A modern, minimalistic dashboard built with Go, WASM, and cutting-edge web technologies.
+					</p>
+				</div>
+
+				<!-- CTA buttons -->
+				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+					@button.Button(button.Props{
+						Variant: button.VariantDefault,
+						Class:   "text-lg px-8 py-3 h-auto",
+						Href:    "/dashboard",
+					}) {
+						Get Started
+						@icon.ArrowRight(icon.Props{Size: 20, Class: "ml-2"})
+					}
+					@button.Button(button.Props{
+						Variant: button.VariantOutline,
+						Class:   "text-lg px-8 py-3 h-auto",
+						Href:    "/about",
+					}) {
+						Learn More
+					}
+				</div>
+			</div>
+		</div>
+
+		<!-- Scroll indicator -->
+		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+			<div class="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
+				<div class="w-1 h-3 bg-muted-foreground rounded-full mt-2 animate-pulse"></div>
+			</div>
+		</div>
+	</section>
+}
+
+templ Features() {
+	<section class="py-20 bg-muted/30">
+		<div class="container mx-auto px-4">
+			<div class="text-center mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold mb-4">
+					Built for Modern Web
+				</h2>
+				<p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+					Combining the power of Go, WebAssembly, and modern frontend technologies
+					to deliver exceptional performance and user experience.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+				@FeatureCard("⚡", "Lightning Fast", "Built with WebAssembly for near-native performance in the browser.")
+				@FeatureCard("🔒", "Secure by Design", "Modern security practices with CSP, nonce-based scripts, and secure defaults.")
+				@FeatureCard("📱", "Responsive", "Beautiful on every device, from mobile phones to desktop displays.")
+				@FeatureCard("🎨", "Modern UI", "Clean, minimalistic design with Tailwind CSS and custom components.")
+				@FeatureCard("🚀", "Easy Deploy", "Containerized deployment with Docker for seamless scaling.")
+				@FeatureCard("🔧", "Developer Friendly", "Built with Go templates, hot reload, and comprehensive tooling.")
+			</div>
+		</div>
+	</section>
+}
+
+templ FeatureCard(emoji, title, description string) {
+	@card.Card(card.Props{
+		Class: "h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm",
+	}) {
+		@card.Content(card.ContentProps{
+			Class: "p-8 text-center space-y-4",
+		}) {
+			<div class="text-4xl mb-4">{ emoji }</div>
+			<h3 class="text-xl font-semibold">{ title }</h3>
+			<p class="text-muted-foreground leading-relaxed">{ description }</p>
+		}
+	}
+}
+
+templ Stats() {
+	<section class="py-20">
+		<div class="container mx-auto px-4">
+			<div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
+				@StatItem("99.9%", "Uptime")
+				@StatItem("<100ms", "Response Time")
+				@StatItem("Zero", "Dependencies")
+				@StatItem("∞", "Possibilities")
+			</div>
+		</div>
+	</section>
+}
+
+templ StatItem(value, label string) {
+	<div class="space-y-2">
+		<div class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
+			{ value }
+		</div>
+		<div class="text-sm text-muted-foreground uppercase tracking-wide">
+			{ label }
+		</div>
+	</div>
+}
+
+templ CTA() {
+	<section class="py-20 bg-primary text-primary-foreground">
+		<div class="container mx-auto px-4 text-center">
+			<div class="max-w-3xl mx-auto space-y-8">
+				<h2 class="text-3xl md:text-4xl font-bold">
+					Ready to Get Started?
+				</h2>
+				<p class="text-xl opacity-90 leading-relaxed">
+					Join the future of web applications. Build faster, deploy easier, scale better.
+				</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center">
+					@button.Button(button.Props{
+						Variant: button.VariantSecondary,
+						Class:   "text-lg px-8 py-3 h-auto",
+						Href:    "/dashboard",
+					}) {
+						Start Building
+						@icon.ArrowRight(icon.Props{Size: 20, Class: "ml-2"})
+					}
+					@button.Button(button.Props{
+						Variant: button.VariantOutline,
+						Class:   "text-lg px-8 py-3 h-auto border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10",
+						Href:    "https://github.com/pynezz/wasmdash",
+						Target:  "_blank",
+					}) {
+						@icon.Github(icon.Props{Size: 20, Class: "mr-2"})
+						View on GitHub
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+}
+
+templ Footer() {
+	<footer class="py-12 border-t bg-muted/30">
+		<div class="container mx-auto px-4">
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+				<div class="md:col-span-2 space-y-4">
+					<div class="flex items-center space-x-2">
+						<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+							<span class="text-primary-foreground font-bold text-sm">W</span>
+						</div>
+						<span class="text-xl font-bold">WasmDash</span>
+					</div>
+					<p class="text-muted-foreground max-w-md">
+						Building the future of web applications with Go, WebAssembly,
+						and modern web technologies.
+					</p>
+				</div>
+
+				<div class="space-y-4">
+					<h4 class="font-semibold">Product</h4>
+					<ul class="space-y-2 text-sm text-muted-foreground">
+						<li><a href="/features" class="hover:text-foreground transition-colors">Features</a></li>
+						<li><a href="/pricing" class="hover:text-foreground transition-colors">Pricing</a></li>
+						<li><a href="/docs" class="hover:text-foreground transition-colors">Documentation</a></li>
+					</ul>
+				</div>
+
+				<div class="space-y-4">
+					<h4 class="font-semibold">Company</h4>
+					<ul class="space-y-2 text-sm text-muted-foreground">
+						<li><a href="/about" class="hover:text-foreground transition-colors">About</a></li>
+						<li><a href="/contact" class="hover:text-foreground transition-colors">Contact</a></li>
+						<li><a href="/security.txt" class="hover:text-foreground transition-colors">Security</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
+				<p>&copy; 2025 pynezz. All rights reserved.</p>
+			</div>
+		</div>
+	</footer>
+}
+
 templ Home() {
-    <div class={"div", "flex flex-col mx-auto my-auto sm:flex-row items-center justify-between h-screen bg-gradient-to-b from-[#0d1117] to-[#161b22] text-white"}>
-        <header class={"header", "my-0 w-full p-4 bg-[#cdcdcd] shadow-md"}>
-            <h1 class={"title", "text-4xl font-bold text-center"}>Welcome to Home</h1>
-        </header>
-        <main class={"main", "flex-grow flex flex-col items-center justify-center"}>
-            <p class={"description", "text-lg text-center max-w-md"}>
-                Experience the sleek design and sturdy functionality of my website.
-            </p>
-            <button class={"cta-button", "mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"}>
-                Let's go!
-            </button>
-        </main>
-        <footer class={"footer", "w-full p-4 bg-[#161b22] text-center"}>
-            <p class={"footer-text", "text-sm"}>© 2025 pynezz</p>
-        </footer>
-    </div>
+	<div class="min-h-screen bg-background">
+		@Hero()
+		@Features()
+		@Stats()
+		@CTA()
+		@Footer()
+	</div>
 }

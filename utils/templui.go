@@ -3,6 +3,7 @@ package utils
 
 import (
 	"fmt"
+	"maps"
 
 	"crypto/rand"
 
@@ -41,9 +42,7 @@ func IfElse[T any](condition bool, trueValue T, falseValue T) T {
 func MergeAttributes(attrs ...templ.Attributes) templ.Attributes {
 	merged := templ.Attributes{}
 	for _, attr := range attrs {
-		for k, v := range attr {
-			merged[k] = v
-		}
+		maps.Copy(merged, attr)
 	}
 	return merged
 }
@@ -51,5 +50,19 @@ func MergeAttributes(attrs ...templ.Attributes) templ.Attributes {
 // RandomID generates a random ID string.
 // Example: RandomID() → "id-1a2b3c"
 func RandomID() string {
-	return fmt.Sprintf("id-%s", rand.Text())
+	return fmt.Sprintf("id-%s", RandomString(10))
+}
+
+func RandomString(length int) string {
+	// undefined: rand.Stringfunc RandomString(length int) string {
+	bytes := make([]byte, length)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		panic(err)
+	}
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	for i := range bytes {
+		bytes[i] = charset[bytes[i]%byte(len(charset))]
+	}
+	return string(bytes)
 }

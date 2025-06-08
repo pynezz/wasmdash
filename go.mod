@@ -3,6 +3,7 @@ module github.com/pynezz/wasmdash
 go 1.23.0
 
 require (
+	github.com/Oudwins/tailwind-merge-go v0.2.1
 	github.com/a-h/templ v0.3.887
 	github.com/labstack/echo/v4 v4.13.4
 	github.com/pynezz/pynezzentials v0.0.0-20250529204220-424e50eded8b

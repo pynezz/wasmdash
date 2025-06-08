@@ -18,3 +18,9 @@ build/
 .idea/
 .zed/
 .vscode/
+
+notes/
+
+*-linux_amd64
+*.exe
+*-amd64

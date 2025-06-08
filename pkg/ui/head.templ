@@ -1,7 +1,6 @@
 // pkg/ui/head.templ
 package ui
 
-
 templ ogMeta() {
 	<meta property="og:title" content="Wasmdash"/>
 	<meta property="og:description" content="A simple dashboard for managing your web applications"/>
@@ -9,18 +8,21 @@ templ ogMeta() {
 	<meta property="og:url" content="https://pynezz.dev/"/>
 }
 
-
 templ Head(title string, path ...string) {
 	<head>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 		<meta name="description" content="A simple dashboard for managing your web applications"/>
 		@ogMeta()
-		<title> { title } </title>
+		<title>{ title } </title>
 		<link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
-		<link rel="font" href="/static/fonts/source-sans-3.woff2" type="font/woff2" />
-
-		<link rel="stylesheet" href="/static/css/tailwind.css" />
-
+		<link rel="preload" href="/static/css/styles.css" as="style"/>
+		<link rel="preload" href="/static/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="/static/css/styles.css" media="all"/>
+		<noscript><link rel="stylesheet" href="/static/css/styles.css"/></noscript>
 	</head>
 }

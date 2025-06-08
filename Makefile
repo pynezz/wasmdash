@@ -4,13 +4,15 @@ VERSION=$(shell git describe --tags --always)
 GOOS=$(shell go env GOOS)
 GOARCH=$(shell go env GOARCH)
 
+DATE=$(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+
 BINARY_NAME="wasmdash-$(VERSION)-$(GOOS)_$(GOARCH)"
 
 build: ## Build the project, including Tailwind CSS and Go binary
 	go mod tidy && \
 	#go generate #go getailwindcss -m -o static/css/styles.css && \
 	go generate && \
-	go build -ldflags="-w -s" -o ${BINARY_NAME}
+	go build -ldflags="-w -s -X main.buildTime=$(DATE)" -X main.commit=$(COMMIT) -o ${BINARY_NAME}
 
 vet: ## Run go vet to check for potential issues
 	go vet ./...
