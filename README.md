@@ -10,6 +10,8 @@ No tracking, no premium features, no bullshit, just a simple dashboard.
 
 ![dashboard banner](./assets/dashboard_banner.png)
 
+[![wakatime](https://wakatime.com/badge/github/pynezz/wasmdash.svg)](https://wakatime.com/badge/github/pynezz/wasmdash)
+
 ![Go](https://img.shields.io/badge/Go-1.24-blue) [![Go Report Card](https://goreportcard.com/badge/github.com/pynezz/wasmdash)](https://goreportcard.com/report/github.com/pynezz/wasmdash) ![TinyGo](https://img.shields.io/badge/TinyGo-0.37.0-blue) ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ![Unstable](https://img.shields.io/badge/Unstable-Use%20at%20your%20own%20risk-red)
