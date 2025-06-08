@@ -2,8 +2,14 @@
 
 ---
 
+<div style="border-radius:15px;">
+  <img src="./assets/dashboard_banner.png" alt="Go" />
+</div>
+
 ![Go](https://img.shields.io/badge/Go-1.24-blue)
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/pynezz/wasmdash)](https://goreportcard.com/report/github.com/pynezz/wasmdash)
+
 ![TinyGo](https://img.shields.io/badge/TinyGo-0.37.0-blue)
 
 Simple dashboard PWA full-stack application built with Go compiled with TinyGo to WebAssembly.
