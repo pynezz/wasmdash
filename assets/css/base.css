@@ -23,6 +23,12 @@
     --color-card-foreground: var(--card-foreground);
     --color-ring: var(--ring);
 
+    /* Dashboard Theme Colors */
+    --color-dashboard-primary: var(--dashboard-primary);
+    --color-dashboard-accent: var(--dashboard-accent);
+    --color-dashboard-success: var(--dashboard-success);
+    --color-dashboard-warning: var(--dashboard-warning);
+
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
@@ -41,16 +47,22 @@
     --card-foreground: hsl(240 10% 3.9%);
     --border: hsl(240 5.9% 90%);
     --input: hsl(240 5.9% 90%);
-    --primary: hsl(240 5.9% 10%);
+    --primary: hsl(262 83% 58%); /* Purple from image */
     --primary-foreground: hsl(0 0% 98%);
     --secondary: hsl(240 4.8% 95.9%);
     --secondary-foreground: hsl(240 5.9% 10%);
-    --accent: hsl(240 4.8% 95.9%);
-    --accent-foreground: hsl(240 5.9% 10%);
+    --accent: hsl(178 60% 48%); /* Teal from image */
+    --accent-foreground: hsl(0 0% 98%);
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
-    --ring: hsl(240 5.9% 10%);
+    --ring: hsl(262 83% 58%);
     --radius: 0.5rem;
+
+    /* Dashboard Theme */
+    --dashboard-primary: hsl(262 83% 58%); /* Purple */
+    --dashboard-accent: hsl(178 60% 48%); /* Teal */
+    --dashboard-success: hsl(142 76% 36%); /* Green */
+    --dashboard-warning: hsl(43 96% 56%); /* Golden */
 }
 
 .dark {
@@ -64,16 +76,22 @@
     --card-foreground: hsl(0 0% 98%);
     --border: hsl(240 3.7% 15.9%);
     --input: hsl(240 3.7% 15.9%);
-    --primary: hsl(0 0% 98%);
+    --primary: hsl(262 83% 58%);
     --primary-foreground: hsl(240 5.9% 10%);
     --secondary: hsl(240 3.7% 15.9%);
     --secondary-foreground: hsl(0 0% 98%);
-    --accent: hsl(240 3.7% 15.9%);
-    --accent-foreground: hsl(0 0% 98%);
+    --accent: hsl(178 60% 48%);
+    --accent-foreground: hsl(240 5.9% 10%);
     --destructive: hsl(0 62.8% 30.6%);
     --destructive-foreground: hsl(0 0% 98%);
     --ring: hsl(240 4.9% 83.9%);
     --radius: 0.5rem;
+
+    /* Dashboard Dark Theme */
+    --dashboard-primary: hsl(262 83% 58%);
+    --dashboard-accent: hsl(178 60% 48%);
+    --dashboard-success: hsl(142 76% 36%);
+    --dashboard-warning: hsl(43 96% 56%);
 }
 
 @layer base {
@@ -86,5 +104,83 @@
         font-feature-settings:
             "rlig" 1,
             "calt" 1;
+    }
+
+    /* Minimal accent border for containers */
+    .dashboard-accent-border {
+        border-image: linear-gradient(
+                135deg,
+                var(--dashboard-primary),
+                var(--dashboard-accent)
+            )
+            1;
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--border);
+    }
+
+    /* Performance-optimized focus states */
+    .dashboard-focus:focus-visible {
+        outline: 2px solid var(--dashboard-primary);
+        outline-offset: 2px;
+    }
+}
+
+/* Minimal performance utilities */
+@layer utilities {
+    .text-dashboard-primary {
+        color: var(--dashboard-primary);
+    }
+    .text-dashboard-accent {
+        color: var(--dashboard-accent);
+    }
+    .text-dashboard-success {
+        color: var(--dashboard-success);
+    }
+    .text-dashboard-warning {
+        color: var(--dashboard-warning);
+    }
+
+    .bg-dashboard-primary {
+        background-color: var(--dashboard-primary);
+    }
+    .bg-dashboard-accent {
+        background-color: var(--dashboard-accent);
+    }
+    .bg-dashboard-success {
+        background-color: var(--dashboard-success);
+    }
+    .bg-dashboard-warning {
+        background-color: var(--dashboard-warning);
+    }
+
+    .border-dashboard-primary {
+        border-color: var(--dashboard-primary);
+    }
+    .border-dashboard-accent {
+        border-color: var(--dashboard-accent);
+    }
+
+    /* Minimal gradient for key elements only */
+    .dashboard-gradient-text {
+        background: linear-gradient(
+            135deg,
+            var(--dashboard-primary),
+            var(--dashboard-accent)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

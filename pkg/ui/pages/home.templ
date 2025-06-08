@@ -5,62 +5,60 @@ import (
 	"github.com/pynezz/wasmdash/pkg/ui/components/card"
 	"github.com/pynezz/wasmdash/pkg/ui/components/icon"
 )
-
 templ Hero() {
-	<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-		<!-- Background gradient -->
-		<div class="absolute inset-0 bg-gradient-to-br from-background via-background to-muted"></div>
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-		<!-- Grid pattern overlay -->
-		<div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+    <!-- background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/50"></div>
 
-		<!-- Content -->
-		<div class="relative z-10 container mx-auto px-4 text-center">
-			<div class="max-w-4xl mx-auto space-y-8">
-				<!-- Main heading -->
-				<div class="space-y-4">
-					<h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-						<span class="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-							Welcome to
-						</span>
-						<br/>
-						<span class="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-							WasmDash
-						</span>
-					</h1>
-					<p class="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-						A modern, minimalistic dashboard built with Go, WASM, and cutting-edge web technologies.
-					</p>
-				</div>
+        <!-- contents -->
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <div class="max-w-4xl mx-auto space-y-8">
 
-				<!-- CTA buttons -->
-				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-					@button.Button(button.Props{
-						Variant: button.VariantDefault,
-						Class:   "text-lg px-8 py-3 h-auto",
-						Href:    "/dashboard",
-					}) {
-						Get Started
-						@icon.ArrowRight(icon.Props{Size: 20, Class: "ml-2"})
-					}
-					@button.Button(button.Props{
-						Variant: button.VariantOutline,
-						Class:   "text-lg px-8 py-3 h-auto",
-						Href:    "/about",
-					}) {
-						Learn More
-					}
-				</div>
-			</div>
-		</div>
+            	<!-- Main heading -->
+                <div class="space-y-4">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+                        <span class="text-foreground">
+                            Welcome to
+                        </span>
+                        <br/>
+                        <span class="dashboard-gradient-text">
+                            WasmDash
+                        </span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                        A modern, performance-focused dashboard built with Go, WASM, and cutting-edge web technologies.
+                    </p>
+                </div>
 
-		<!-- Scroll indicator -->
-		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-			<div class="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
-				<div class="w-1 h-3 bg-muted-foreground rounded-full mt-2 animate-pulse"></div>
-			</div>
-		</div>
-	</section>
+                <!-- CTA buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    @button.Button(button.Props{
+                        Variant: button.VariantDashboard,
+                        Class:   "text-lg px-8 py-3 h-auto",
+                        Href:    "/dashboard",
+                    }) {
+                        Get Started
+                        @icon.ArrowRight(icon.Props{Size: 20, Class: "ml-2"})
+                    }
+                    @button.Button(button.Props{
+                        Variant: button.VariantOutline,
+                        Class:   "text-lg px-8 py-3 h-auto",
+                        Href:    "/about",
+                    }) {
+                        Learn More
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Minimal scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div class="w-6 h-10 border-2 border-dashboard-accent rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-dashboard-accent rounded-full mt-2"></div>
+            </div>
+        </div>
+    </section>
 }
 
 templ Features() {
@@ -201,6 +199,7 @@ templ Footer() {
 			</div>
 		</div>
 	</footer>
+
 }
 
 templ Home() {

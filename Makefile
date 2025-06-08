@@ -8,10 +8,11 @@ DATE=$(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 
 BINARY_NAME="wasmdash-$(VERSION)-$(GOOS)_$(GOARCH)"
 
-build: ## Build the project, including Tailwind CSS and Go binary
+build: ## Build the project, including theme and assets
 	go mod tidy && \
-	#go generate #go getailwindcss -m -o static/css/styles.css && \
+	go run scripts/theme-config.go && \
 	go generate && \
+	tailwindcss -i assets/css/base.css -o static/css/styles.css -m && \
 	go build -ldflags="-w -s -X main.buildTime=$(DATE) -X main.commit=$(VERSION)" -o ${BINARY_NAME}
 
 vet: ## Run go vet to check for potential issues
@@ -26,7 +27,10 @@ dev: ## Run the development server with live reload
 
 gen: ## Generate templ files
 	templ generate
-	# tailwindcss -o static/css/styles.css --minify
+
+theme: ## Generate dashboard theme
+	go run scripts/theme-config.go
+	@echo "Theme generated successfully"
 
 clean: ## Clean up build artifacts and *_templ-files
 	go clean

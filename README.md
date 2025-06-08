@@ -2,30 +2,47 @@
 
 ---
 
-<div style="border-radius:15px;">
-  <img src="./assets/dashboard_banner.png" alt="Go" />
-</div>
+![dashboard banner](./assets/dashboard_banner.png)
 
-![Go](https://img.shields.io/badge/Go-1.24-blue)
+![Go](https://img.shields.io/badge/Go-1.24-blue) [![Go Report Card](https://goreportcard.com/badge/github.com/pynezz/wasmdash)](https://goreportcard.com/report/github.com/pynezz/wasmdash) ![TinyGo](https://img.shields.io/badge/TinyGo-0.37.0-blue) ![License](https://img.shields.io/badge/License-MIT-blue)
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/pynezz/wasmdash)](https://goreportcard.com/report/github.com/pynezz/wasmdash)
+![Unstable](https://img.shields.io/badge/Unstable-Use%20at%20your%20own%20risk-red)
 
-![TinyGo](https://img.shields.io/badge/TinyGo-0.37.0-blue)
+---
 
-Simple dashboard PWA full-stack application built with Go compiled with TinyGo to WebAssembly.
+## Table of contents
+
+- [Features](#features)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
-- Basic CRUD operations
-- Localhost API for editing
-- Responsive design for mobile and desktop
-- Easy to use and customize
+### Web app
+
+- [ ] Basic CRUD operations
+- [ ] Localhost API for editing
+- [x] Responsive design for mobile and desktop
+- [ ] Easy to use and customize
+- [ ] Theming
+
+### Backend
+
+- [ ] Basic CRUD operations
+- [ ] Secrets management
+- [ ] Simple API
+- [ ] Simple auth middleware
+
+> ![CAUTION]
+> Simple auth should not be relied upon by itself
 
 ## Architecture
 
-- Frontend: (undecided)
+- Frontend: [Templ](https://templ.guide), [TemplUI](https://templui.io), TailwindCSS, and undecided [*[Datastar](https://data-star.dev) or [Alpine.js](https://alpinejs.dev)*]
 - Backend: Go
-- Database: IndexedDB
+- Database: Undecided [*IndexedDB, SQLite*]
 - Storage: LocalStorage
 - Cache: Service Worker
 - CDN: Service Worker
@@ -77,7 +94,13 @@ podman run --rm -v $(pwd):/app tinygo/tinygo:0.37.0 tinygo build -o wasmdash.was
 > [!IMPORTANT]
 > Heavily work in progress screenshot
 
-![screenshot 03.06.2025](assets/03062025.png)
+**08.06.2025**
+
+![screenshot 08.06.2025](assets/08062025.png)
+
+**03.06.2025**
+
+> ![screenshot 03.06.2025](assets/03062025.png)
 
 ## Contributing
 

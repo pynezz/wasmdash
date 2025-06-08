@@ -17,6 +17,11 @@ const (
 	VariantSecondary   Variant = "secondary"
 	VariantGhost       Variant = "ghost"
 	VariantLink        Variant = "link"
+	VariantDashboard Variant = "dashboard"
+    VariantAccent    Variant = "accent"
+    VariantSuccess   Variant = "success"
+    VariantWarning   Variant = "warning"
+
 )
 
 const (
@@ -48,6 +53,32 @@ type Props struct {
 	HxTarget     string
 	HxSwap       string
 	HxReplaceUrl string
+}
+
+// Update the variantClasses function:
+func (b Props) variantClasses() string {
+    switch b.Variant {
+    case VariantDashboard:
+        return "bg-dashboard-primary text-white hover:bg-dashboard-primary/90 focus-visible:ring-dashboard-primary"
+    case VariantAccent:
+        return "bg-dashboard-accent text-white hover:bg-dashboard-accent/90 focus-visible:ring-dashboard-accent"
+    case VariantSuccess:
+        return "bg-dashboard-success text-white hover:bg-dashboard-success/90 focus-visible:ring-dashboard-success"
+    case VariantWarning:
+        return "bg-dashboard-warning text-black hover:bg-dashboard-warning/90 focus-visible:ring-dashboard-warning"
+    case VariantDestructive:
+        return "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+    case VariantOutline:
+        return "border border-dashboard-primary text-dashboard-primary hover:bg-dashboard-primary hover:text-white"
+    case VariantSecondary:
+        return "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+    case VariantGhost:
+        return "hover:bg-accent hover:text-accent-foreground"
+    case VariantLink:
+        return "text-dashboard-primary underline-offset-4 hover:underline"
+    default:
+        return "bg-primary text-primary-foreground hover:bg-primary/90"
+    }
 }
 
 templ Button(props ...Props) {
@@ -134,22 +165,6 @@ templ Button(props ...Props) {
 	}
 }
 
-func (b Props) variantClasses() string {
-	switch b.Variant {
-	case VariantDestructive:
-		return "bg-destructive text-destructive-foreground hover:bg-destructive/90"
-	case VariantOutline:
-		return "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
-	case VariantSecondary:
-		return "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-	case VariantGhost:
-		return "hover:bg-accent hover:text-accent-foreground"
-	case VariantLink:
-		return "text-primary underline-offset-4 hover:underline"
-	default:
-		return "bg-primary text-primary-foreground hover:bg-primary/90"
-	}
-}
 
 func (b Props) sizeClasses() string {
 	switch b.Size {
