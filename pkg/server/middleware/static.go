@@ -3,12 +3,18 @@ package middleware
 import (
 	"fmt"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/labstack/echo/v4"
 )
 
-// StaticFileHeaders returns middleware that sets proper MIME types and cache headers for static files
+/*
+StaticFileHeaders returns middleware that sets proper MIME types and cache headers for static files*
+
+- return:
+- middleware with custom configuration.
+*/
 func StaticFileHeaders() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
@@ -58,7 +64,7 @@ func StaticFileHeaders() echo.MiddlewareFunc {
 
 				// Add security headers for static files
 				c.Response().Header().Set("X-Content-Type-Options", "nosniff")
-				
+
 				// Add CORS headers if needed
 				if isFont(ext) {
 					c.Response().Header().Set("Access-Control-Allow-Origin", "*")
@@ -70,24 +76,47 @@ func StaticFileHeaders() echo.MiddlewareFunc {
 	}
 }
 
-// isFont checks if the file extension is a font file
+/* isFont
+ * Determines if the given extension is a font file.
+ * Returns true if the extension is a font file, false otherwise.
+ */
 func isFont(ext string) bool {
 	fontExtensions := []string{".woff", ".woff2", ".ttf", ".otf", ".eot"}
-	for _, fontExt := range fontExtensions {
-		if ext == fontExt {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(fontExtensions, ext)
 }
 
-// StaticFileConfig holds configuration for static file middleware
+/* isImage
+ * Determines if the given extension is an image file.
+ * Returns true if the extension is an image file, false otherwise.
+ */
+func isImage(ext string) bool {
+	imageExtensions := []string{".jpg", ".jpeg", ".png", ".gif", ".svg"}
+	return slices.Contains(imageExtensions, ext)
+}
+
+/* isStaticFile
+ * Determines if the given extension is a static file.
+ * Returns true if the extension is a static file, false otherwise.
+ */
+func isStaticFile(ext string) bool {
+	return isFont(ext) || isImage(ext)
+}
+
+/* StaticFileConfig
+ * Configuration for static file middleware.
+ */
 type StaticFileConfig struct {
 	CacheMaxAge int    // Cache max age in seconds
 	Prefix      string // URL prefix for static files
 }
 
-// StaticFileHeadersWithConfig returns middleware with custom configuration
+/*
+StaticFileHeadersWithConfig
+
+@return:
+
+	middleware with custom configuration.
+*/
 func StaticFileHeadersWithConfig(config StaticFileConfig) echo.MiddlewareFunc {
 	if config.CacheMaxAge == 0 {
 		config.CacheMaxAge = 31536000 // 1 year default
@@ -110,7 +139,7 @@ func StaticFileHeadersWithConfig(config StaticFileConfig) echo.MiddlewareFunc {
 
 				// Add security headers for static files
 				c.Response().Header().Set("X-Content-Type-Options", "nosniff")
-				
+
 				// Add CORS headers for fonts
 				if isFont(ext) {
 					c.Response().Header().Set("Access-Control-Allow-Origin", "*")

@@ -49,7 +49,7 @@ func NewLogger(logger *log.Logger) Logger {
 
 func (l *Logger) writeErrorMsg(err string, ctx echo.Context) {
 	host := os.Getenv("HOST")
-	l.Printf("[ERROR] [%s] %s\n%s\n%s", host, err, ctx.Request())
+	l.Printf("[ERROR] [%s] %s\n%s\n%s", host, err, ctx.Request().Header, ctx.Scheme())
 }
 
 func (l *Logger) writeDebugMsg(message string, ctx echo.Context) {
@@ -60,14 +60,14 @@ func (l *Logger) writeDebugMsg(message string, ctx echo.Context) {
 }
 
 func (l *Logger) writeInfoMsg(message string, ctx echo.Context) {
-	l.Printf("[INFO] %s", message)
+	l.Printf("[INFO] %s\n%s", message, ctx.Request().Header)
 }
 
 func (l *Logger) writeWarningMsg(message string, ctx echo.Context) {
-	l.Printf("[WARNING] %s\n%s", message)
+	l.Printf("[WARNING] %s\n%s", message, ctx.Request().Header)
 }
 
-func (l *Logger) Printf(format string, v ...interface{}) {
+func (l *Logger) Printf(format string, v ...any) {
 	l.logger.Printf(format, v...)
 }
 
@@ -92,7 +92,6 @@ func (l *Logger) Log(level Level, message string, ctx echo.Context) Message {
 }
 
 // Logger middleware for logging certain important stuff
-
 func Log(c echo.Context) error {
 	MiddlewareLogger.Printf("Request: %s %s", c.Request().Method, c.Request().URL.Path)
 	return nil

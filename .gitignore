@@ -24,3 +24,5 @@ notes/
 *-linux_amd64
 *.exe
 *-amd64
+
+*.log

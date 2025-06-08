@@ -8,7 +8,6 @@ import (
 	"github.com/pynezz/wasmdash/pkg/server/middleware"
 )
 
-// Config holds server configuration
 type Config struct {
 	Port        string
 	Host        string
@@ -16,18 +15,16 @@ type Config struct {
 	ServerName  string
 }
 
-// Server wraps the Echo instance with configuration
 type Server struct {
 	echo   *echo.Echo
 	config *Config
 }
 
-// New creates a new server instance
 func New(config *Config) *Server {
 	if config == nil {
 		config = &Config{
 			Port:        "8080",
-			Host:        "localhost",
+			Host:        "pynezz.dev",
 			Environment: "development",
 			ServerName:  "wasmdash",
 		}
@@ -87,11 +84,6 @@ func (s *Server) setupDebugRoutes() {
 
 	mobileGroup := s.echo.Group("/mobile")
 	mobileGroup.GET("/detect", handlers.MobileDetectHandler(s.config.Port))
-}
-
-func (s *Server) ContentSecurityPolicy(next echo.HandlerFunc) string {
-	csp := "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'self'; media-src 'self'; child-src 'self';"
-	return csp
 }
 
 // Start starts the HTTP server
