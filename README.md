@@ -1,4 +1,10 @@
 # wasmdash
+<!-- DatDash? -->
+<!-- webassembly Digital App Services Home? -->
+
+A self-hosted aesthetically pleasing, hackable, no bullshit dashboard in a single file.
+
+No tracking, no premium features, no bullshit, just a simple dashboard.
 
 ---
 
@@ -26,6 +32,9 @@
 - [ ] Localhost API for editing
 - [x] Responsive design for mobile and desktop
 - [ ] Easy to use and customize
+  - [ ] Widgets
+  - [ ] Custom API
+- [ ] Dynamic layout
 - [ ] Theming
 
 ### Backend
@@ -35,7 +44,7 @@
 - [ ] Simple API
 - [ ] Simple auth middleware
 
-> ![CAUTION]
+> [!CAUTION]
 > Simple auth should not be relied upon by itself
 
 ## Architecture
