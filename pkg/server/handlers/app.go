@@ -62,7 +62,7 @@ func prodcsp(ctx echo.Context) string {
 
 func getcsp(ctx echo.Context) {
 	ctx.Response().Header().Set("Content-Security-Policy",
-		fmt.Sprintf("default-src 'none'; script-src 'self' 'nonce-%s'; style-src 'self'; img-src 'self' *.github.com; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; %s",
+		fmt.Sprintf("default-src 'none'; script-src 'self' 'unsafe-eval' 'nonce-%s'; style-src 'self' 'unsafe-inline'; img-src 'self' *.github.com; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; %s",
 			ctx.Get("nonce"), prodcsp(ctx)))
 }
 
@@ -88,6 +88,5 @@ func Render(ctx echo.Context, statusCode int, t templ.Component) error {
 		return err
 	}
 
-	ctx.Set("nonce", nonce)
 	return ctx.HTML(statusCode, buf.String())
 }

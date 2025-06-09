@@ -1,0 +1,55 @@
+package widgets
+
+type Widget struct {
+    ID      string `json:"id"`
+    Class   string `json:"class"`
+    Style   string `json:"style"`
+    Title   string `json:"title"`
+    Hidden  bool   `json:"hidden"`
+    Data    map[string]interface{} `json:"data,omitempty"`
+}
+
+type Clock struct {
+    WClock  Widget `json:"widget"`
+    Format  string `json:"format"`
+    Time    Time   `json:"time"`
+}
+
+type Time struct {
+    Hour   int `json:"hour"`
+    Minute int `json:"minute"`
+    Second int `json:"second"`
+}
+
+templ DisplayClock(clock Clock) {
+    <div
+        class="${ clock.WClock.Class }"
+        id="${ clock.WClock.ID }"
+        style="${ clock.WClock.Style }"
+        title="${ clock.WClock.Title }"
+        data-hidden="${ clock.WClock.Hidden }"
+        x-data="{
+            hour: ${ clock.Time.Hour },
+            minute: ${ clock.Time.Minute },
+            second: ${ clock.Time.Second },
+            format: '${ clock.Format }',
+
+            formatTime(h, m, s) {
+                return this.format === '24h'
+                    ? \`\${h.toString().padStart(2, '0')}:\${m.toString().padStart(2, '0')}:\${s.toString().padStart(2, '0')}\`
+                    : \`\${(h % 12 || 12).toString().padStart(2, '0')}:\${m.toString().padStart(2, '0')}:\${s.toString().padStart(2, '0')} \${h >= 12 ? 'PM' : 'AM'}\`;
+            },
+
+            updateClock() {
+                const now = new Date();
+                this.hour = now.getHours();
+                this.minute = now.getMinutes();
+                this.second = now.getSeconds();
+            }
+        }"
+        x-init="setInterval(() => updateClock(), 1000); updateClock()"
+    >
+        <span class="clock-format" x-text="format" @click="format = format === '24h' ? '12h' : '24h'"></span>
+        <span class="clock-time" x-text="formatTime(hour, minute, second)"></span>
+    </div>
+}

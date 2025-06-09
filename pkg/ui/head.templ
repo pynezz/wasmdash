@@ -8,7 +8,7 @@ templ ogMeta() {
 	<meta property="og:url" content="https://pynezz.dev/"/>
 }
 
-templ Head(title string, path ...string) {
+templ Head(title, nonce, path string) {
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
@@ -23,6 +23,8 @@ templ Head(title string, path ...string) {
 		<link rel="preload" href="/static/css/styles.css" as="style"/>
 		<link rel="preload" href="/static/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
 		<link rel="stylesheet" href="/static/css/styles.css" media="all"/>
-		<noscript><link rel="stylesheet" href="/static/css/styles.css"/></noscript>
+		// <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'nonce-'{ nonce }">
+		<script defer nonce={ nonce } src="/static/js/alpine@3.14.9.js"></script>
+		// <noscript><link rel="stylesheet" href="/static/css/styles.css"/></noscript>
 	</head>
 }

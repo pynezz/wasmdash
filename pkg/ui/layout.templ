@@ -22,10 +22,10 @@ templ ServiceWorker() {
 //     // box-sizing: border-box;
 // }
 
-templ Layout(content templ.Component, nonce string, path ...string) {
+templ Layout(content templ.Component, nonce string, path string) {
     <!DOCTYPE html>
     <html lang="en" class="dark" style={ }>
-        @Head("WasmDash", path...)
+        @Head("WasmDash", nonce, path)
         <body class="min-h-screen bg-background text-foreground">
             <div class="h-1 bg-gradient-to-r from-dashboard-primary to-dashboard-accent"></div>
 

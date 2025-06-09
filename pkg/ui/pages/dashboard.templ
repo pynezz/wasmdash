@@ -5,6 +5,7 @@ import (
 	"github.com/pynezz/wasmdash/pkg/ui/components/button"
 	"github.com/pynezz/wasmdash/pkg/ui/components/card"
 	"github.com/pynezz/wasmdash/pkg/ui/components/icon"
+	"github.com/pynezz/wasmdash/pkg/ui/widgets"
 )
 
 // DashboardData holds all the data needed for the dashboard
@@ -32,6 +33,26 @@ type SystemStatus struct {
 	DiskUsage    string
 	ActiveUsers  int
 	HealthStatus string // "healthy", "warning", "critical"
+}
+
+func DefaultClock() widgets.Clock {
+    w := widgets.Widget{ // Use curly braces instead of parentheses
+        ID:     "default-clock",
+        Class:  "text-muted-foreground",
+        Style:  "font-size: 0.875rem;",
+        Title:  "Current Time",
+        Hidden: false,
+    }
+
+    return widgets.Clock{
+        WClock: w,
+        Time: widgets.Time{
+            Hour:   12,
+            Minute: 34,
+            Second: 56,
+        },
+        Format: "24h",
+    }
 }
 
 // DefaultDashboardData returns mock data for the dashboard
@@ -68,6 +89,12 @@ templ DashboardView(data DashboardData) {
 			<h1 class="text-3xl font-bold text-foreground">Dashboard</h1>
 			<p class="text-muted-foreground">Welcome back, { data.Username }</p>
 		</header>
+		<div x-data="{ count: 0 }" class="mb-4 p-4 border rounded">
+            <button @click="count++" class="p-2 bg-blue-500 text-white rounded">
+                Increment
+            </button>
+            <span x-text="count" class="ml-2"></span>
+        </div>
 
 		<!-- Stats Cards -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -105,24 +132,51 @@ templ StatCard(stat StatWidget) {
 				</div>
 			</div>
 			<div class="mt-2 flex items-center text-xs">
-				if stat.Change > 0 {
-					<span class="text-green-500 flex items-center">
-						@icon.TrendingUp(icon.Props{Size: 14, Class: "mr-1"})
-						{ fmt.Sprintf("+%.1f%%", stat.Change) }
-					</span>
-				} else if stat.Change < 0 {
-					<span class="text-yellow-500 flex items-center">
-						@icon.TrendingDown(icon.Props{Size: 14, Class: "mr-1"})
-						{ fmt.Sprintf("%.1f%%", stat.Change) }
-					</span>
-				} else {
-					<span class="text-muted-foreground flex items-center">
-						@icon.Minus(icon.Props{Size: 14, Class: "mr-1"})
-						{ "0.0%" }
-					</span>
-				}
-				<span class="ml-2 text-muted-foreground">{ stat.Description }</span>
+				@widgets.DisplayClock(DefaultClock())
 			</div>
+
+
+				// <span class="text-muted-foreground">
+				// 	@icon.Clock(icon.Props{Size: 14, Class: "mr-1"})
+				// 	{ fmt.Sprintf("Last updated: %s", "12:34 PM") }
+				// </span>
+				// // Uncomment the following lines if you want to display change percentage
+				// <div class="flex items-center">
+				// 	@icon.TrendingUp(icon.Props{Size: 14, Class: "mr-1"})
+				// 	{ fmt.Sprintf("+%.1f%%", stat.Change) }
+				// </div>
+				// // Uncomment the following lines if you want to display change percentage with icons
+				// <div class="flex items-center">
+				// 	if stat.Change > 0 {
+				// 		@icon.TrendingUp(icon.Props{Size: 14, Class: "mr-1"})
+				// 		{ fmt.Sprintf("+%.1f%%", stat.Change) }
+				// 	} else if stat.Change < 0 {
+				// 		@icon.TrendingDown(icon.Props{Size: 14, Class: "mr-1"})
+				// 		{ fmt.Sprintf("%.1f%%", stat.Change) }
+				// 	} else {
+				// 		@icon.Minus(icon.Props{Size: 14, Class: "mr-1"})
+				// 		{ "0.0%" }
+				// 	}
+				// </div>
+				// Uncomment the following lines if you want to display change percentage with icons and description
+				// if stat.Change > 0 {
+				// 	<span class="text-green-500 flex items-center">
+				// 		@icon.TrendingUp(icon.Props{Size: 14, Class: "mr-1"})
+				// 		{ fmt.Sprintf("+%.1f%%", stat.Change) }
+				// 	</span>
+				// } else if stat.Change < 0 {
+				// 	<span class="text-yellow-500 flex items-center">
+				// 		@icon.TrendingDown(icon.Props{Size: 14, Class: "mr-1"})
+				// 		{ fmt.Sprintf("%.1f%%", stat.Change) }
+				// 	</span>
+				// } else {
+				// 	<span class="text-muted-foreground flex items-center">
+				// 		@icon.Minus(icon.Props{Size: 14, Class: "mr-1"})
+				// 		{ "0.0%" }
+				// 	</span>
+				// }
+				<span class="ml-2 text-muted-foreground">{ stat.Description }</span>
+			// </div>
 		}
 	}
 }
